@@ -1,6 +1,7 @@
 "use client";
 import {
   BilzzardsMusic,
+  FirstLove,
   LyricsIcon,
   NextIcon,
   PauseIcon,
@@ -13,7 +14,7 @@ import { useEffect, useRef } from "react";
 
 export const AudioController = () => {
   const controller = useRef<HTMLAudioElement>(null);
-  const audio = BilzzardsMusic;
+  const audio = FirstLove;
   const {
     // audio,
     isPlaying,

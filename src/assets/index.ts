@@ -12,3 +12,4 @@ export { default as ReloadIcon } from "@/assets/icon/reload";
 export { default as LeftArrow } from "@/assets/icon/leftArrow";
 
 export { default as BilzzardsMusic } from "./music/Blizzards.mp3";
+export { default as FirstLove } from "./music/첫사랑.mp3";
