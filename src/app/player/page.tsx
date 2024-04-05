@@ -1,15 +1,14 @@
-import { Header } from "@/components/common/Header";
+import { HeadFootLayout } from "@/components/common/HeadFootLayout";
 import { AudioController } from "@/components/player/audioController";
 import { CdPlayer } from "@/components/player/cdPlayer";
+import { Lyrics } from "@/components/player/lyrics";
 
 export default function Player() {
   return (
-    <div className="flex flex-col min-h-[100vh]">
-      <Header title="HOME" />
-      <div className="flex flex-1 flex-col justify-evenly ">
-        <CdPlayer />
-        <AudioController />
-      </div>
-    </div>
+    <HeadFootLayout title="HOME">
+      <CdPlayer />
+      <AudioController />
+      <Lyrics />
+    </HeadFootLayout>
   );
 }
