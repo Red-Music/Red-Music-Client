@@ -5,6 +5,7 @@ interface MusicStoreInterface {
   toggleIsPlaying: () => void;
   setIsPlaying: (isPlaying: boolean) => void;
 
+  id: number;
   title: string;
   artist: string;
   audio?: HTMLAudioElement;
@@ -30,6 +31,7 @@ export const musicStore = create<MusicStoreInterface>((set) => ({
   toggleIsPlaying: () => set((state) => ({ isPlaying: !state.isPlaying })),
   setIsPlaying: (isPlaying: boolean) => set(() => ({ isPlaying })),
 
+  id: 2,
   title: "",
   artist: "",
   audio: undefined,

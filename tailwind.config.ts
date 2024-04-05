@@ -13,6 +13,9 @@ const config: Config = {
       animation: {
         "spin-slow": "spin 3.5s linear infinite",
       },
+      boxShadow: {
+        bottom: "0px -2px 5px 0px rgba(0,0,0,0.1)",
+      },
       colors: {
         primary: "#D11F29",
         800: "#18181C",
@@ -34,6 +37,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar-hide")],
 };
 export default config;

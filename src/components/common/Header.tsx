@@ -8,7 +8,7 @@ export const Header = ({
   title?: string;
 }) => {
   return (
-    <div className="flex justify-between items-center h-11 px-2">
+    <div className="flex justify-between items-center h-11 px-2 fixed bg-100 dark:bg-100-dark top-0 max-w-[400px] w-[100vw]">
       <div className="w-[30px] flex justify-center items-center">
         {prev && <LeftIcon />}
       </div>
