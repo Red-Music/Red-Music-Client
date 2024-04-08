@@ -1,6 +1,9 @@
 import { create } from "zustand";
 
 interface MusicStoreInterface {
+  controller?: HTMLAudioElement;
+  setController: (controller: HTMLAudioElement) => void;
+
   isPlaying: boolean;
   toggleIsPlaying: () => void;
   setIsPlaying: (isPlaying: boolean) => void;
@@ -27,11 +30,14 @@ const CalculationTime = (time: number): string => {
 };
 
 export const musicStore = create<MusicStoreInterface>((set) => ({
+  controller: undefined,
+  setController: (controller: HTMLAudioElement) => set(() => ({ controller })),
+
   isPlaying: false,
   toggleIsPlaying: () => set((state) => ({ isPlaying: !state.isPlaying })),
   setIsPlaying: (isPlaying: boolean) => set(() => ({ isPlaying })),
 
-  id: 2,
+  id: 3,
   title: "",
   artist: "",
   audio: undefined,

@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react";
+import { Audio } from "./Audio";
 
 export const PhoneLayout = ({ children }: { children: ReactNode }) => {
   return (
@@ -6,6 +7,7 @@ export const PhoneLayout = ({ children }: { children: ReactNode }) => {
       <div
         className={`max-w-[400px] w-[100vw] bg-200 dark:bg-200-dark h-full `}
       >
+        <Audio />
         {children}
       </div>
     </div>

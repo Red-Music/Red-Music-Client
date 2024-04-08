@@ -1,6 +1,5 @@
 "use client";
 import {
-  BilzzardsMusic,
   FirstLove,
   LyricsIcon,
   NextIcon,
@@ -10,10 +9,9 @@ import {
   ReloadIcon,
 } from "@/assets";
 import { musicStore } from "@/store/music";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
 export const AudioController = () => {
-  const controller = useRef<HTMLAudioElement>(null);
   const audio = FirstLove;
   const {
     // audio,
@@ -21,39 +19,24 @@ export const AudioController = () => {
     totalTime,
     currentTime,
     toggleIsPlaying,
-    setTotalTime,
     setCurrentTime,
     progress,
     setProgress,
     setIsPlaying,
+    controller,
   } = musicStore();
 
   const onClickPlay = () => {
-    if (!controller.current) return;
+    if (!controller) return;
 
-    if (isPlaying) {
-      controller.current?.pause();
-      toggleIsPlaying();
-    } else {
-      toggleIsPlaying();
-
-      const playPromise = controller.current.play();
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {})
-          .catch((error) => {
-            console.log("재생 오류:", error);
-            toggleIsPlaying();
-          });
-      }
-    }
+    toggleIsPlaying();
   };
 
   const onClickReload = () => {
-    if (!controller.current) return;
+    if (!controller) return;
     setIsPlaying(true);
-    controller.current.load();
-    controller.current.play();
+    controller.load();
+    controller.play();
   };
 
   const onClickProgressBar = (e: any) => {
@@ -68,29 +51,26 @@ export const AudioController = () => {
     const total = totalTime.split(":");
     const time = Number(total[0]) * 60 + Number(total[1]);
     setProgress(time * per, time);
-    if (controller.current) {
-      controller.current.currentTime = time * per;
+    if (controller) {
+      controller.currentTime = time * per;
     }
   };
 
   useEffect(() => {
-    setCurrentTime(controller.current?.currentTime || 0);
-  }, [isPlaying, setCurrentTime]);
+    setCurrentTime(controller?.currentTime || 0);
+  }, [controller?.currentTime, isPlaying, setCurrentTime]);
 
   useEffect(() => {
-    if (audio && controller.current) {
-      controller.current.addEventListener("timeupdate", () => {
-        if (controller.current?.currentTime === controller.current?.duration) {
+    if (audio && controller) {
+      controller.addEventListener("timeupdate", () => {
+        if (controller?.currentTime === controller?.duration) {
           setIsPlaying(false);
-          controller.current?.pause();
+          controller?.pause();
         }
-        setProgress(
-          controller.current?.currentTime || 0,
-          controller.current?.duration || 0
-        );
+        setProgress(controller?.currentTime || 0, controller?.duration || 0);
       });
     }
-  }, [controller, audio, setProgress]);
+  }, [audio, controller, setIsPlaying, setProgress]);
 
   useEffect(() => {
     document
@@ -122,9 +102,6 @@ export const AudioController = () => {
           <p className="text-sm">{currentTime}</p>
           <p className="text-sm text-500 dark:text-500-dark">{totalTime}</p>
         </div>
-        <audio src={audio} ref={controller} controlsList="nodownload">
-          오디오 지원되지 않는 브라우저
-        </audio>
       </div>
       <div className="flex justify-between w-full items-center">
         <div>
