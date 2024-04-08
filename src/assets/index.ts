@@ -1,5 +1,6 @@
 export { default as CD } from "./image/cd.png";
 export { default as ALBUM } from "./image/album.png";
+export { default as DEFAULTIMAGE } from "./image/defaultImage.png";
 
 export { default as Wave } from "./lottie/wave.json";
 
@@ -18,6 +19,7 @@ export { default as SearchIcon } from "@/assets/icon/search";
 export { default as SettingIcon } from "@/assets/icon/setting";
 export { default as BottomSheetIcon } from "@/assets/icon/BottomSheet";
 export { default as TrashIcon } from "@/assets/icon/trash";
+export { default as CloseIcon } from "@/assets/icon/close";
 
 export { default as BilzzardsMusic } from "./music/Blizzards.mp3";
 export { default as FirstLove } from "./music/첫사랑.mp3";

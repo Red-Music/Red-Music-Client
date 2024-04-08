@@ -24,6 +24,7 @@ export const AudioController = () => {
     setProgress,
     setIsPlaying,
     controller,
+    id,
   } = musicStore();
 
   const onClickPlay = () => {
@@ -80,6 +81,13 @@ export const AudioController = () => {
       .getElementById("progressBarCircle")
       ?.style.setProperty("left", progress);
   }, [progress]);
+
+  useEffect(() => {
+    if (id === 0) {
+      setIsPlaying(false);
+      controller?.pause();
+    }
+  }, [controller, id, setIsPlaying]);
 
   return (
     <div className="flex flex-col items-center px-10 gap-10">

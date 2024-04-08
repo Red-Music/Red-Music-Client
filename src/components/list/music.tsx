@@ -9,7 +9,7 @@ interface musicProps {
   id: number;
 }
 export const Musics = ({ music }: { music: musicProps }) => {
-  const { id, isPlaying, toggleIsPlaying } = musicStore();
+  const { id, isPlaying, toggleIsPlaying, setIsPlaying } = musicStore();
   return (
     <div
       className={`flex w-full justify-between p-4 items-center border-b-2 border-300 dark:border-300-dark
@@ -27,12 +27,12 @@ export const Musics = ({ music }: { music: musicProps }) => {
           <p className="font-light text-sm">{music.artist}</p>
         </div>
       </div>
-      <div className="flex gap-2">
+      <div className="flex gap-3 items-center">
         <div
           onClick={() => {
             if (id === music.id) toggleIsPlaying();
             else {
-              toggleIsPlaying();
+              setIsPlaying(true);
               musicStore.setState({ id: music.id });
             }
           }}
@@ -44,7 +44,7 @@ export const Musics = ({ music }: { music: musicProps }) => {
           )}
         </div>
         <div>
-          <TrashIcon cursor />
+          <TrashIcon cursor size={20} />
         </div>
       </div>
     </div>

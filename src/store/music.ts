@@ -9,14 +9,16 @@ interface MusicStoreInterface {
   setIsPlaying: (isPlaying: boolean) => void;
 
   id: number;
-  title: string;
-  artist: string;
+  title?: string;
+  artist?: string;
   audio?: HTMLAudioElement;
-  image?: File;
+  image?: string;
   lyrics?: string;
   totalTime: string;
   currentTime: string;
   progress: string;
+
+  setId: (id: number) => void;
 
   setTotalTime: (time: number) => void;
   setCurrentTime: (time: number) => void;
@@ -37,9 +39,9 @@ export const musicStore = create<MusicStoreInterface>((set) => ({
   toggleIsPlaying: () => set((state) => ({ isPlaying: !state.isPlaying })),
   setIsPlaying: (isPlaying: boolean) => set(() => ({ isPlaying })),
 
-  id: 3,
-  title: "",
-  artist: "",
+  id: 0,
+  title: undefined,
+  artist: undefined,
   audio: undefined,
   image: undefined,
   lyrics: undefined,
@@ -47,6 +49,7 @@ export const musicStore = create<MusicStoreInterface>((set) => ({
   currentTime: "00:00",
   progress: "0%",
 
+  setId: (id: number) => set(() => ({ id })),
   setTotalTime: (time: number) => {
     set(() => ({ totalTime: CalculationTime(time) }));
   },
