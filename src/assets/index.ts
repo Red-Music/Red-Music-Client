@@ -20,6 +20,7 @@ export { default as SettingIcon } from "@/assets/icon/setting";
 export { default as BottomSheetIcon } from "@/assets/icon/BottomSheet";
 export { default as TrashIcon } from "@/assets/icon/trash";
 export { default as CloseIcon } from "@/assets/icon/close";
+export { default as PlusIcon } from "@/assets/icon/plus";
 
 export { default as BilzzardsMusic } from "./music/Blizzards.mp3";
 export { default as FirstLove } from "./music/첫사랑.mp3";

@@ -19,6 +19,7 @@ export const Footer = () => {
 
   const { isPlaying, toggleIsPlaying, setId, id, image, artist, title } =
     musicStore();
+
   return (
     <>
       {id && pathName !== "/player" && (

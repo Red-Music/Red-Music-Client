@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 
 export default function Player() {
   const { id } = musicStore();
+
   const router = useRouter();
   return (
     <HeadFootLayout title="HOME">

@@ -1,4 +1,5 @@
 "use client";
+
 import { FirstLove } from "@/assets";
 import { musicStore } from "@/store/music";
 import { use, useEffect, useRef } from "react";
