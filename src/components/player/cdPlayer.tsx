@@ -1,10 +1,10 @@
 "use client";
-import { ALBUM, CD } from "@/assets";
+import { CD } from "@/assets";
 import { musicStore } from "@/store/music";
 import Image from "next/image";
 
 export const CdPlayer = () => {
-  const { isPlaying } = musicStore();
+  const { isPlaying, image, title, artist } = musicStore();
 
   return (
     <div className="flex flex-col gap-5 ">
@@ -15,17 +15,17 @@ export const CdPlayer = () => {
           alt="CD"
           priority
         />
-        <Image
-          src={ALBUM}
+        <img
+          src={image}
           alt="ALBUM"
-          className={`w-[25%] absolute z-[2] rounded-full ${
+          className={`w-[25%] h-[90px] absolute z-[2] rounded-full ${
             isPlaying && "animate-spin-slow"
           }`}
         />
       </div>
       <div className="flex flex-col items-center">
-        <h1 className="font-bold text-2xl">첫사랑</h1>
-        <p className="text-lg">백아</p>
+        <h1 className="font-bold text-2xl">{title}</h1>
+        <p className="text-lg">{artist}</p>
       </div>
     </div>
   );

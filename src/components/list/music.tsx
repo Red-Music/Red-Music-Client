@@ -1,15 +1,29 @@
 "use client";
+import { delList, musicType } from "@/api/playlist";
 import { PauseIcon, PlayIcon, TrashIcon } from "@/assets";
 import { musicStore } from "@/store/music";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
 
-interface musicProps {
-  title: string;
-  artist: string;
-  image: string;
-  id: number;
-}
-export const Musics = ({ music }: { music: musicProps }) => {
-  const { id, isPlaying, toggleIsPlaying, setIsPlaying } = musicStore();
+export const Musics = ({
+  music,
+  listId,
+  isLiked,
+}: {
+  music: musicType;
+  listId: number;
+  isLiked: boolean;
+}) => {
+  const { id, isPlaying, toggleIsPlaying } = musicStore();
+
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation({
+    mutationKey: ["delList"],
+    mutationFn: delList,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["listApi"] });
+    },
+  });
   return (
     <div
       className={`flex w-full justify-between p-4 items-center border-b-2 border-300 dark:border-300-dark
@@ -17,14 +31,14 @@ export const Musics = ({ music }: { music: musicProps }) => {
     >
       <div className="flex gap-2">
         <img
-          src={music.image}
-          alt={music.title + music.artist}
+          src={music.subnail}
+          alt={music.title + music.singer}
           width="44px"
           height="44px"
         />
         <div className="flex flex-col justify-between">
           <p className="font-bold">{music.title}</p>
-          <p className="font-light text-sm">{music.artist}</p>
+          <p className="font-light text-sm">{music.singer}</p>
         </div>
       </div>
       <div className="flex gap-3 items-center">
@@ -32,8 +46,15 @@ export const Musics = ({ music }: { music: musicProps }) => {
           onClick={() => {
             if (id === music.id) toggleIsPlaying();
             else {
-              setIsPlaying(true);
-              musicStore.setState({ id: music.id });
+              musicStore.setState({
+                id: music.id,
+                audio: music.music_file,
+                title: music.title,
+                artist: music.singer,
+                lyrics: music.lyrics,
+                image: music.subnail,
+                isLiked: isLiked,
+              });
             }
           }}
         >
@@ -43,7 +64,7 @@ export const Musics = ({ music }: { music: musicProps }) => {
             <PlayIcon size={20} cursor />
           )}
         </div>
-        <div>
+        <div onClick={() => mutate(listId)}>
           <TrashIcon cursor size={20} />
         </div>
       </div>

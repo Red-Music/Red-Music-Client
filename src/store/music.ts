@@ -8,21 +8,24 @@ interface MusicStoreInterface {
   toggleIsPlaying: () => void;
   setIsPlaying: (isPlaying: boolean) => void;
 
-  id: number;
+  id: string;
   title?: string;
   artist?: string;
-  audio?: HTMLAudioElement;
+  audio?: string;
   image?: string;
   lyrics?: string;
   totalTime: string;
   currentTime: string;
   progress: string;
+  isLiked?: boolean;
 
-  setId: (id: number) => void;
+  setMusic: (id: string, audio?: string) => void;
 
   setTotalTime: (time: number) => void;
   setCurrentTime: (time: number) => void;
   setProgress: (currentTime: number, totalTime: number) => void;
+
+  toggleIsLiked: () => void;
 }
 
 const CalculationTime = (time: number): string => {
@@ -39,7 +42,7 @@ export const musicStore = create<MusicStoreInterface>((set) => ({
   toggleIsPlaying: () => set((state) => ({ isPlaying: !state.isPlaying })),
   setIsPlaying: (isPlaying: boolean) => set(() => ({ isPlaying })),
 
-  id: 0,
+  id: "0",
   title: undefined,
   artist: undefined,
   audio: undefined,
@@ -48,8 +51,9 @@ export const musicStore = create<MusicStoreInterface>((set) => ({
   totalTime: "00:00",
   currentTime: "00:00",
   progress: "0%",
+  isLiked: false,
 
-  setId: (id: number) => set(() => ({ id })),
+  setMusic: (id: string, audio?: string) => set(() => ({ id, audio })),
   setTotalTime: (time: number) => {
     set(() => ({ totalTime: CalculationTime(time) }));
   },
@@ -62,4 +66,5 @@ export const musicStore = create<MusicStoreInterface>((set) => ({
       currentTime: CalculationTime(currentTime),
       totalTime: CalculationTime(totalTime),
     })),
+  toggleIsLiked: () => set((state) => ({ isLiked: !state.isLiked })),
 }));

@@ -1,20 +1,17 @@
 "use client";
-import {
-  FirstLove,
-  LyricsIcon,
-  NextIcon,
-  PauseIcon,
-  PlayIcon,
-  PrevIcon,
-  ReloadIcon,
-} from "@/assets";
+import { addLike } from "@/api/like";
+import { PauseIcon, PlayIcon, ReloadIcon } from "@/assets";
+import HeartIcon from "@/assets/icon/heart";
 import { musicStore } from "@/store/music";
+import { useMutation } from "@tanstack/react-query";
 import { useEffect } from "react";
 
-export const AudioController = () => {
-  const audio = FirstLove;
+interface AudioControllerProps {
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+export const AudioController = ({ setIsOpen }: AudioControllerProps) => {
   const {
-    // audio,
+    audio,
     isPlaying,
     totalTime,
     currentTime,
@@ -25,6 +22,8 @@ export const AudioController = () => {
     setIsPlaying,
     controller,
     id,
+    isLiked,
+    toggleIsLiked,
   } = musicStore();
 
   const onClickPlay = () => {
@@ -57,6 +56,14 @@ export const AudioController = () => {
     }
   };
 
+  const { mutate: addLikeMutate } = useMutation({
+    mutationKey: ["addLike"],
+    mutationFn: addLike,
+    onSuccess: () => {
+      toggleIsLiked();
+    },
+  });
+
   useEffect(() => {
     setCurrentTime(controller?.currentTime || 0);
   }, [controller?.currentTime, isPlaying, setCurrentTime]);
@@ -83,7 +90,7 @@ export const AudioController = () => {
   }, [progress]);
 
   useEffect(() => {
-    if (id === 0) {
+    if (id === "0") {
       setIsPlaying(false);
       controller?.pause();
     }
@@ -112,13 +119,17 @@ export const AudioController = () => {
         </div>
       </div>
       <div className="flex justify-between w-full items-center">
-        <div>
-          <LyricsIcon className="cursor-pointer" />
+        <div onClick={() => addLikeMutate(id)}>
+          <HeartIcon
+            className={`cursor-pointer ${
+              isLiked ? "text-primary" : "text-500 dark:text-500-dark"
+            }`}
+          />
         </div>
         <div className="flex gap-10 items-center">
-          <div>
+          {/* <div>
             <PrevIcon className="cursor-pointer" />
-          </div>
+          </div> */}
           <div onClick={onClickPlay}>
             {isPlaying ? (
               <PauseIcon className="cursor-pointer" />
@@ -126,9 +137,9 @@ export const AudioController = () => {
               <PlayIcon className="cursor-pointer" />
             )}
           </div>
-          <div>
+          {/* <div>
             <NextIcon className="cursor-pointer" />
-          </div>
+          </div> */}
         </div>
         <div onClick={onClickReload}>
           <ReloadIcon className="cursor-pointer" />
